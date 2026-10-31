@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Party quiz «Трансформация Безработного» about Phil: 10 random questions per game, 4 answers each, in Russian.
+- Party quiz about Phil: 10 random questions per game, 4 answers each.
 - Shared leaderboard with attempts, total points and average score for every player.
 - Submit a fact about Phil and Root AI - model b1t quiz v1.1 turns it into new funny questions that join the game right away.
 - Free-throw second chance: after a wrong answer, make a basketball free throw to try the question again.

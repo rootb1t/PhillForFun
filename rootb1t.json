@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "slug": "phill",
+  "name": "Трансформация Безработного",
+  "tagline": "A Russian-language party quiz about our friend Phil, with mini-games, a live feed, a Divine Orb price tracker and an invite-only portal builder.",
+  "description": "A Russian-language party site built around our friend Phil (aka x23x): a 10-question quiz with a shared leaderboard, achievements and hidden easter eggs. Players can submit facts about Phil, and Root AI - model b1t quiz v1.1 turns them into new funny questions. A 3D cartoon Phil walks around the page, comments on everything and levels up a shared talent tree, next to basketball and other mini-games and a Path of Exile Divine Orb price exchange. Invited members can also build a similar portal about themselves or a friend with Root AI - model b1t portal v1.0.",
+  "status": "live",
+  "url": "https://phill.rootb1t.com",
+  "repo": "rootb1t/PhillForFun",
+  "tags": ["quiz", "party-game", "mini-games", "basketball", "path-of-exile", "ai", "portal-builder", "russian"],
+  "showOnHub": true
+}

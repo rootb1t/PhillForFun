@@ -1,6 +1,6 @@
 # PhillForFun — «Трансформация Безработного» and the portal platform
 
-**Live site:** https://rootb1t.github.io/PhillForFun/
+**Live site:** https://phill.rootb1t.com — one Cloudflare Worker serves both the site and the API. The old address (https://rootb1t.github.io/PhillForFun/) forwards there, carrying the member's account key over in the URL fragment.
 
 A Russian-language party quiz about our friend Phil (aka **x23x**). Each game picks 10 random questions from a shared pool, each with 4 answers. The shared leaderboard tracks every player's attempts, total points and average score, and is ranked by the average. Players also collect themed achievements and can hunt for hidden easter eggs. Any player can submit a fact about Phil, and **Root AI - model b1t quiz v1.1** turns it into new funny questions that join the pool right away.
 
@@ -99,7 +99,7 @@ The home page shows a shared feed of what everyone did on the site, newest first
 
 | Part | Where | What it does |
 | --- | --- | --- |
-| Site | `index.html`, `style.css`, `app.js`, `config.js` | Static front end, hosted on GitHub Pages |
+| Site | `index.html`, `style.css`, `app.js`, `config.js`, `moved.js` | Static front end, served by the Worker as static assets (`moved.js` forwards visitors of the old GitHub Pages address) |
 | Built-in questions | `questions.js` | The starting question pool |
 | Achievements | `achievements.js` | Achievement catalogue (unlock logic and easter eggs live in `app.js`) |
 | Side-court mini-game | `hoop.js` | Drag-and-throw basketball in the free space beside the quiz (wide screens only) |
@@ -109,7 +109,7 @@ The home page shows a shared feed of what everyone did on the site, newest first
 | Server | `worker/` | Cloudflare Worker: takes facts, generates and moderates questions with Root AI - model b1t quiz v1.1, stores questions and scores |
 | Admin | `admin.html` | Review, edit and delete player-generated questions (🔄 regenerate or ✏️ edit any answer), browse submitted facts |
 
-If `API_URL` in `config.js` is empty, the site runs in local mode: built-in questions only, and the leaderboard is stored in the browser.
+On phill.rootb1t.com (and in `wrangler dev`) `config.js` sends API calls to the same origin; anywhere else it uses the Worker's own `workers.dev` address. If `API_URL` is empty, the site runs in local mode: built-in questions only, and the leaderboard is stored in the browser.
 
 ## Server setup (one time)
 
@@ -117,12 +117,22 @@ If `API_URL` in `config.js` is empty, the site runs in local mode: built-in ques
 2. Sign up at https://dash.cloudflare.com.
 3. Workers & Pages → Create → **Import a repository** → connect GitHub → pick `PhillForFun`.
    Set **Path / Root directory** to `worker`, leave the build command empty, deploy command `npx wrangler deploy`.
+   The `[assets]` block in `worker/wrangler.toml` publishes the repo root as the site (`.assetsignore` keeps the Worker
+   code and repo files out); the API routes are listed in `run_worker_first`, everything else that is not a file gets
+   a JSON 404 from the Worker.
 4. In the new Worker: Settings → Variables and secrets → add two **secrets**:
    - `AI_API_KEY` — the key from step 1;
    - `ADMIN_TOKEN` — any long password for the admin page.
-5. Put the Worker URL (`https://phill-quiz-api.<account>.workers.dev`) into `API_URL` in `config.js`.
+5. **Domain:** Worker → Settings → Domains & Routes → add the custom domain `phill.rootb1t.com`. `config.js` sends API
+   calls to the same origin there (`SITE_ORIGIN`); on any other host it falls back to the Worker's `workers.dev` address.
+6. **Old address:** GitHub Pages (branch `main`, folder `/`) may keep serving the same files; `moved.js` forwards every
+   visit to the new domain with the same page, query and hash.
 
-After that, every push to `main` redeploys both the site (GitHub Pages) and the server (Cloudflare).
+After that, every push to `main` redeploys the site and the server together. After changing front-end files, run
+`./bump-version.sh` so browsers fetch fresh files.
+
+Local preview: `cd worker && npm install && npx wrangler dev --local`, then open http://localhost:8787/ — the site and
+the API on one origin, with a local Durable Object (no secrets, so Root AI features are off).
 
 ## Server settings (`worker/wrangler.toml`)
 

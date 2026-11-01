@@ -2,8 +2,8 @@
 // Joining is invite-only: an invite code creates an account with a secret key kept in this browser.
 // The builder walks through photos, facts, Root AI content, theme and animations, then preview and publish.
 
-import { API_URL } from "./config.js?v=202610272025";
-import { ACCOUNT_KEY, escapeHtml as esc } from "./portal.js?v=202610272025";
+import { API_URL } from "./config.js?v=202611010534";
+import { ACCOUNT_KEY, escapeHtml as esc } from "./portal.js?v=202611010534";
 
 const API = API_URL.replace(/\/+$/, "");
 const getKey = () => { try { return localStorage.getItem(ACCOUNT_KEY) || ""; } catch (_) { return ""; } };

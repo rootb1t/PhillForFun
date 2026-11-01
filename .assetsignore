@@ -1,0 +1,8 @@
+# Files the Worker must not serve as static assets (the site is the repo root; see worker/wrangler.toml [assets])
+.git
+.github
+.gitignore
+.assetsignore
+worker
+README.md
+bump-version.sh

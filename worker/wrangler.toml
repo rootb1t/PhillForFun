@@ -4,6 +4,17 @@ compatibility_date = "2025-09-01"
 workers_dev = true
 preview_urls = false
 
+# The site is served by this Worker too, at https://phill.rootb1t.com (custom domain, set in the dashboard):
+# the repo root holds the front end; .assetsignore keeps the Worker code and repo files out. Requests that match a
+# file get the file; everything else reaches src/index.js. The API has no path prefix, so its routes are listed in
+# run_worker_first: they always go to the code, even if a file with the same name ever appears.
+[assets]
+directory = "../"
+run_worker_first = [
+  "/questions", "/scores", "/player", "/prices", "/baskets", "/achievements", "/events", "/events/*", "/facts", "/phil",
+  "/admin/*", "/auth/*", "/me", "/invites", "/invites/*", "/portals", "/portals/*", "/portal", "/builder/*"
+]
+
 # Single store for facts, questions and scores (SQLite-backed Durable Object, available on the free plan)
 [[durable_objects.bindings]]
 name = "STORE"

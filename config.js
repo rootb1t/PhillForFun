@@ -6,9 +6,13 @@ export const QUIZ = {
   questionsPerGame: 10
 };
 
-// Cloudflare Worker URL (e.g. "https://phill-quiz-api.<account>.workers.dev").
-// If empty, the leaderboard is stored only in the browser and adding facts is disabled.
-export const API_URL = "https://phill-quiz-api.feezmo.workers.dev";
+// Where the API lives. On phill.rootb1t.com (and in `wrangler dev`) the same Worker serves the site and the API, so
+// requests go to the same origin; anywhere else (a plain static preview, the old GitHub Pages address) they go to the
+// Worker's own address. If empty, the leaderboard is stored only in the browser and adding facts is disabled.
+export const SITE_ORIGIN = "https://phill.rootb1t.com";
+export const API_URL = location.origin === SITE_ORIGIN || /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
+  ? location.origin
+  : "https://phill-quiz-api.feezmo.workers.dev";
 
 // RMT goal shown under the Divine Orb prices.
 // divinesPerHour: estimated income of an above-average player, in Divine-equivalent value per hour.

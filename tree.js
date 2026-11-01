@@ -1,7 +1,7 @@
 // Talent tree page: four branches with level, XP bar and the talents of each as a vertical path.
 // renderTree(root, progress, xp, players)
 
-import { BRANCHES, TALENTS, MAX_LEVEL, xpForLevel } from "./talents.js?v=202610272025";
+import { BRANCHES, TALENTS, MAX_LEVEL, xpForLevel } from "./talents.js?v=202611010534";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const int = (x) => Math.round(x).toLocaleString("ru-RU");

@@ -6,9 +6,9 @@ export const QUIZ = {
   questionsPerGame: 10
 };
 
-// Cloudflare Worker URL (e.g. "https://phill-quiz-api.<account>.workers.dev").
+// Cloudflare Worker URL (the custom domain of the phill-quiz-api Worker).
 // If empty, the leaderboard is stored only in the browser and adding facts is disabled.
-export const API_URL = "https://phill-quiz-api.feezmo.workers.dev";
+export const API_URL = "https://phill.rootb1t.com";
 
 // RMT goal shown under the Divine Orb prices.
 // divinesPerHour: estimated income of an above-average player, in Divine-equivalent value per hour.

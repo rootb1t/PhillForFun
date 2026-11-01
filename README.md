@@ -1,6 +1,6 @@
 # PhillForFun — «Трансформация Безработного» and the portal platform
 
-**Live site:** https://rootb1t.github.io/PhillForFun/
+**Live site:** https://rootb1t.github.io/PhillForFun/ (GitHub Pages) · **API:** https://phill.rootb1t.com (Cloudflare Worker)
 
 A Russian-language party quiz about our friend Phil (aka **x23x**). Each game picks 10 random questions from a shared pool, each with 4 answers. The shared leaderboard tracks every player's attempts, total points and average score, and is ranked by the average. Players also collect themed achievements and can hunt for hidden easter eggs. Any player can submit a fact about Phil, and **Root AI - model b1t quiz v1.1** turns it into new funny questions that join the pool right away.
 
@@ -120,7 +120,7 @@ If `API_URL` in `config.js` is empty, the site runs in local mode: built-in ques
 4. In the new Worker: Settings → Variables and secrets → add two **secrets**:
    - `AI_API_KEY` — the key from step 1;
    - `ADMIN_TOKEN` — any long password for the admin page.
-5. Put the Worker URL (`https://phill-quiz-api.<account>.workers.dev`) into `API_URL` in `config.js`.
+5. In the new Worker: Settings → Domains & Routes → add the custom domain `phill.rootb1t.com`, and put that URL into `API_URL` in `config.js`.
 
 After that, every push to `main` redeploys both the site (GitHub Pages) and the server (Cloudflare).
 

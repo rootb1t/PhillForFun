@@ -1,0 +1,33 @@
+# Publishes releases, CHANGELOG sections, commit activity and rootb1t.json to the rootb1t.com hub.
+# Needs the repository secret HUB_INGEST_TOKEN (issued in the hub admin, see docs/new-project.md in
+# rootb1t/rootb1t-hub). "Run workflow" = one-time history backfill; it is safe to run again.
+name: Publish to rootb1t hub
+
+on:
+  release:
+    types: [published]
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Validate the token via /api/v1/ingest/ping and print payloads; send nothing."
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: rootb1t/rootb1t-hub/action@action-v1
+        with:
+          token: ${{ secrets.HUB_INGEST_TOKEN }}
+          backfill-changelog: true
+          dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
